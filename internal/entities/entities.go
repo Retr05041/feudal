@@ -9,7 +9,7 @@ import (
 // Defalt entity
 type Entity interface {
 	Update()
-	Draw(screen *ebiten.Image)
+	Draw(screen *ebiten.Image, camX, camY float64)
 }
 
 // Shared attributes amongst entities

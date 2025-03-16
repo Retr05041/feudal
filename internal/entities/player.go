@@ -52,7 +52,7 @@ func (p *Player) Update() {
 	p.Position.Y += p.Velocity.DY
 }
 
-func (p *Player) Draw(screen *ebiten.Image) {
+func (p *Player) Draw(screen *ebiten.Image, camX, camY float64) {
 	op := &ebiten.DrawImageOptions{}
 
 	srcRect, flip := p.Animation.GetCurrentFrame()
@@ -66,8 +66,8 @@ func (p *Player) Draw(screen *ebiten.Image) {
 	spriteSubImage := p.Sprite.Image.SubImage(srcRect).(*ebiten.Image)
 	w, h := spriteSubImage.Bounds().Dx(), spriteSubImage.Bounds().Dy()
 
-	op.GeoM.Translate(-float64(w)/2, -float64(h)/2) // Align center of image to player
-	op.GeoM.Translate(p.Position.X, p.Position.Y)   // Set the position of the image on the screen
+	op.GeoM.Translate(-float64(w)/2, -float64(h)/2)         // Align center of image to player
+	op.GeoM.Translate(p.Position.X-camX, p.Position.Y-camY) // Set the position of the image on the screen
 
 	screen.DrawImage(spriteSubImage, op) // Draw the image on the screen
 }
